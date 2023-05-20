@@ -1,0 +1,16 @@
+---
+- name: install and configure puppet
+  hosts: slave
+  become: yes
+  tasks:
+    - name: run apt-get update
+      apt:
+       update_cache: yes
+    - name: install puppet-agent
+      apt:
+        name: puppet-agent
+        state: present
+    - name: start service
+      systemd:
+        name: puppet-agent
+        state: restarted
